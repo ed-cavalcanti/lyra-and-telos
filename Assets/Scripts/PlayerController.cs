@@ -49,9 +49,13 @@ namespace TarodevController
         {
             if (_anim == null) return;
 
-            // Se o input horizontal for diferente de 0, ele está correndo
+            // Movimentação Horizontal (Corrida)
             bool isMovingHorizontally = Mathf.Abs(_frameInput.Move.x) > 0.01f;
             _anim.SetBool("isRunning", isMovingHorizontally);
+
+            // ESTES SÃO OS NOVOS PARÂMETROS PARA O PULO:
+            _anim.SetBool("isGrounded", _grounded);
+            _anim.SetFloat("verticalVelocity", _frameVelocity.y);
 
             // Inverte a escala horizontal para espelhar o sprite perfeitamente
             if (_frameInput.Move.x > 0)
