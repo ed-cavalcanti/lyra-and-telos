@@ -41,6 +41,18 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: BackroundFar
+    uniqueID: 2153142167
+    locked: 0
+  - name: BackgroundMid
+    uniqueID: 3663809747
+    locked: 0
+  - name: BackgroundLigths
+    uniqueID: 2728696269
+    locked: 0
+  - name: BackgroundNear
+    uniqueID: 305625191
+    locked: 0
   - name: Ground
     uniqueID: 3960500043
     locked: 0
