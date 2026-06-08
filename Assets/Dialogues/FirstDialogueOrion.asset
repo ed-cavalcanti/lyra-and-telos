@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 390206f8bb74e734089102f3f85db3c0, type: 3}
+  m_Name: FirstDialogueOrion
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueData
+  talkScript:
+  - name: Orion
+    text: "Lyra! Gra\xE7as aos c\xE9us voc\xEA desceu daquele observat\xF3rio!"
+  - name: Orion
+    text: "Eu vi o clar\xE3o daqui de baixo. Voc\xEA subiu at\xE9 l\xE1 para praticar
+      seus feiti\xE7os, n\xE3o foi?"
+  - name: Lyra
+    text: "(Ajustando o chap\xE9u grande demais, parecendo um pouco insegura)"
+  - name: Lyra
+    text: "Sim, Orion... Mas eu acabei encontrando algo l\xE1 no topo. Ou melhor,
+      isso me encontrou!"
+  - name: Orion
+    text: "Pelos astros... Isso n\xE3o \xE9 um simples item m\xE1gico"
+  - name: Orion
+    text: "\xC9 O Chap\xE9u do Fim, T\xE9los!"
+  - name: Orion
+    text: "Eu consigo sentir a energia daqui. O poder desse artefato \xE9 inst\xE1vel
+      e extremamente perigoso!"
+  - name: Orion
+    text: "Voc\xEA n\xE3o pode mant\xEA-lo aqui em Palestone"
+  - name: Orion
+    text: "Voc\xEA precisa lev\xE1-lo de volta \xE0 sua origem, na torre dos artefatos"
+  - name: Lyra
+    text: "Eu sei... Mas como eu fa\xE7o para entrar l\xE1?"
+  - name: Orion
+    text: "Os port\xF5es da Torre est\xE3o selados. Para entrar, voc\xEAd eve encontrar
+      e coletar as 5 runas de pedra do port\xE3o"
+  - name: Orion
+    text: "E preste muita aten\xE7\xE3o, crian\xE7a: voc\xEA n\xE3o est\xE1 segura.
+      As hordas do Colecionador vir\xE3o atr\xE1s de voc\xEA"
+  - name: Orion
+    text: "V\xE1 imediatamente e n\xE3o deixe que roubem o chap\xE9u!"

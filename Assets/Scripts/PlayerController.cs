@@ -7,6 +7,7 @@ namespace TarodevController
     [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D))]
     public class PlayerController : MonoBehaviour, IPlayerController
     {
+        DialogueSystem dialogueSystem;
         [SerializeField] private ScriptableStats _stats;
         private Rigidbody2D _rb;
         private CapsuleCollider2D _col;
@@ -27,6 +28,7 @@ namespace TarodevController
 
         private void Awake()
         {
+            dialogueSystem = FindAnyObjectByType<DialogueSystem>();
             _rb = GetComponent<Rigidbody2D>();
             _col = GetComponent<CapsuleCollider2D>();
             _anim = GetComponent<Animator>();
