@@ -219,7 +219,7 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 128
-  chaseRange: 8
+  chaseRange: 10
   attackRange: 2
   attackCooldown: 1.5
   attackOffsetX: 1.6
