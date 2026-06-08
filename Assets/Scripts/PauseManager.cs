@@ -5,17 +5,34 @@ using UnityEngine.SceneManagement;
 public class PauseManager : MonoBehaviour
 {
     [Header("Referências de UI")]
-    [SerializeField] private GameObject pausePanel; // Arrastar o Pause_Panel aqui
+    [SerializeField] private GameObject pausePanel;
 
-    private bool isPausado = false;
+    private bool isPaused = false;
+    private DialogueSystem dialogueSystem;
+
+    void Start()
+    {
+        // Busca o sistema de diálogo, mesmo que comece desativado na cena
+        dialogueSystem = FindAnyObjectByType<DialogueSystem>(FindObjectsInactive.Include);
+    }
 
     private void Update()
     {
-        // Deteta se o jogador pressionou a tecla Escape (ESC) ou P
         var keyboard = Keyboard.current;
-        if (keyboard != null && (keyboard.escapeKey.wasPressedThisFrame || keyboard.pKey.wasPressedThisFrame))
+        if (keyboard == null) return;
+
+        // Checa se o jogador apertou ESC ou P nesta frame
+        if (keyboard.escapeKey.wasPressedThisFrame || keyboard.pKey.wasPressedThisFrame)
         {
-            if (isPausado)
+            // A MÁGICA CONTINUA AQUI:
+            // Se o diálogo estiver ativo, abortamos a execução e ignoramos o input de pausa
+            if (dialogueSystem != null && dialogueSystem.IsDialogueActive)
+            {
+                return;
+            }
+
+            // Se não houver diálogo, controlamos a pausa normalmente
+            if (isPaused)
             {
                 ContinuarJogo();
             }
@@ -28,15 +45,15 @@ public class PauseManager : MonoBehaviour
 
     public void PausarJogo()
     {
-        isPausado = true;
-        pausePanel.SetActive(true); // Mostra a tela de pause
+        isPaused = true;
+        if (pausePanel != null) pausePanel.SetActive(true); // Mostra a tela de pause
         Time.timeScale = 0f;        // Congela o tempo do jogo (física, colisões, etc.)
     }
 
     public void ContinuarJogo()
     {
-        isPausado = false;
-        pausePanel.SetActive(false); // Esconde a tela de pause
+        isPaused = false;
+        if (pausePanel != null) pausePanel.SetActive(false); // Esconde a tela de pause
         Time.timeScale = 1f;         // Normaliza o tempo do jogo
     }
 
@@ -50,7 +67,6 @@ public class PauseManager : MonoBehaviour
     public void VoltarAoMenuPrincipal()
     {
         Time.timeScale = 1f;
-        // Substitui pelo index ou nome da tua cena de menu
-        SceneManager.LoadScene("MenuPrincipal");
+        SceneManager.LoadScene("MainMenu");
     }
 }

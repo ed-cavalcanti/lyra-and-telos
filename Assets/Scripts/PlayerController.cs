@@ -175,10 +175,25 @@ namespace TarodevController
             var groundProbePos = new Vector2(bounds.center.x, bounds.min.y - probeSize.y * 0.5f);
             var ceilingProbePos = new Vector2(bounds.center.x, bounds.max.y + probeSize.y * 0.5f);
 
-            bool groundHit = Physics2D.OverlapBox(groundProbePos, probeSize, 0f, ~_stats.PlayerLayer);
-            bool ceilingHit = Physics2D.OverlapBox(ceilingProbePos, probeSize, 0f, ~_stats.PlayerLayer);
+            // 1. Criamos uma máscara que ignora a layer "OneWayPlatform" para o teto
+            int ceilingMask = ~_stats.PlayerLayer;
+            int oneWayLayer = LayerMask.NameToLayer("OneWayPlatform");
+            if (oneWayLayer != -1)
+            {
+                ceilingMask &= ~(1 << oneWayLayer); // Remove a plataforma do detector de teto
+            }
 
+            // 2. O teto agora usa a nova máscara blindada
+            bool ceilingHit = Physics2D.OverlapBox(ceilingProbePos, probeSize, 0f, ceilingMask);
             if (ceilingHit) _frameVelocity.y = Mathf.Min(0, _frameVelocity.y);
+
+            // 3. O chão SÓ é detectado se o personagem estiver caindo ou parado 
+            // (Isso evita bugar e pisar na plataforma enquanto ainda está atravessando ela para cima)
+            bool groundHit = false;
+            if (_frameVelocity.y <= 0f)
+            {
+                groundHit = Physics2D.OverlapBox(groundProbePos, probeSize, 0f, ~_stats.PlayerLayer);
+            }
 
             if (!_grounded && groundHit)
             {

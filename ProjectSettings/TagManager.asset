@@ -15,7 +15,7 @@ TagManager:
   - Ground
   - Enemies
   - Projectile
-  - 
+  - OneWayPlatform
   - 
   - 
   - 
@@ -53,11 +53,17 @@ TagManager:
   - name: BackgroundNear
     uniqueID: 305625191
     locked: 0
+  - name: BackPlatform
+    uniqueID: 132165007
+    locked: 0
   - name: Buildings
     uniqueID: 3939178407
     locked: 0
   - name: Ground
     uniqueID: 3960500043
+    locked: 0
+  - name: Platforms
+    uniqueID: 3961863143
     locked: 0
   - name: Enemies
     uniqueID: 3292668925

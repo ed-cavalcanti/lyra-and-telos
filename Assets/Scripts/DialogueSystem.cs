@@ -21,13 +21,12 @@ public class DialogueSystem : MonoBehaviour
     [SerializeField] private GameObject dialoguePanel;
     [SerializeField] private TextMeshProUGUI nameText;
 
+    private TarodevController.PlayerController playerController;
     public bool IsDialogueActive => state != STATE.DISABLED;
 
     void Awake()
     {
-        // Como o script está no _Managers, o GetComponentInChildren não vai encontrar 
-        // o texto automaticamente se ele estiver no Canvas. 
-        // É melhor remover ou ignorar essa busca automática se for arrastar manualmente.
+        playerController = FindAnyObjectByType<TarodevController.PlayerController>();
         if (typeText == null)
         {
             typeText = GetComponentInChildren<TypeTextAnimation>();
@@ -51,20 +50,17 @@ public class DialogueSystem : MonoBehaviour
 
     public void StartDialogue(DialogueData data)
     {
-        if (data == null || data.talkScript == null || data.talkScript.Count == 0)
-        {
-            Debug.LogWarning("StartDialogue chamado sem conteúdo de diálogo.");
-            return;
-        }
+        if (data == null || data.talkScript == null || data.talkScript.Count == 0) return;
 
         dialogueData = data;
         currentText = 0;
         finished = false;
 
-        // CORRIGIDO: Ativa especificamente o painel de diálogo da UI
-        if (dialoguePanel != null)
+        if (dialoguePanel != null) dialoguePanel.SetActive(true);
+
+        if (playerController != null)
         {
-            dialoguePanel.SetActive(true);
+            playerController.SetMovementLocked(true);
         }
 
         Next();
@@ -88,19 +84,20 @@ public class DialogueSystem : MonoBehaviour
 
     void Waiting()
     {
-        bool interactPressed = (Keyboard.current != null && Keyboard.current.spaceKey.wasPressedThisFrame) || (Keyboard.current != null && Keyboard.current.eKey.wasPressedThisFrame) ||
-                               (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame);
+        bool interactPressed = (Keyboard.current != null && Keyboard.current.spaceKey.wasPressedThisFrame) ||
+                               (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame) ||
+                               (Keyboard.current != null && Keyboard.current.eKey.wasPressedThisFrame); // Adicionado o E para fluidez!
 
         if (interactPressed)
         {
             if (finished)
             {
                 state = STATE.DISABLED;
+                if (dialoguePanel != null) dialoguePanel.SetActive(false);
 
-                // CORRIGIDO: Desativa apenas o painel de UI, mantendo o _Managers vivo!
-                if (dialoguePanel != null)
+                if (playerController != null)
                 {
-                    dialoguePanel.SetActive(false);
+                    playerController.SetMovementLocked(false);
                 }
             }
             else
@@ -112,7 +109,7 @@ public class DialogueSystem : MonoBehaviour
 
     void Typing()
     {
-        bool interactPressed = (Keyboard.current != null && Keyboard.current.spaceKey.wasPressedThisFrame) ||
+        bool interactPressed = (Keyboard.current != null && Keyboard.current.spaceKey.wasPressedThisFrame) || (Keyboard.current != null && Keyboard.current.eKey.wasPressedThisFrame) ||
                                (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame);
 
         // Permite pular a animação do texto
